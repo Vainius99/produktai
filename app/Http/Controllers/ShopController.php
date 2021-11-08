@@ -14,7 +14,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $shops = Shop::all();
+        $shops = Shop::sortable()->paginate(100);
 
         return view('shop.index', ['shops' => $shops]);
     }

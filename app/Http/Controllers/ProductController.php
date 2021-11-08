@@ -13,10 +13,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view("product.index", ["products" => $products]);
+        $categories = Category::all();
+        $price_filter = $request->price_filter;
+
+        if(!$price_filter)
+        $products = Product::sortable()->paginate(100);
+        else if($price_filter == 1)
+
+        $products = Product::sortable()->where('price', '<', 20 )->paginate(100);
+        else if($price_filter == 2)
+        $products = Product::sortable()->where('price', '<', 40 )->where('price', '>', 20 )->paginate(100);
+        else if($price_filter == 3)
+        $products = Product::sortable()->where('price', '<', 60 )->where('price', '>', 40 )->paginate(100);
+        else if($price_filter == 4)
+        $products = Product::sortable()->where('price', '<', 80 )->where('price', '>', 60 )->paginate(100);
+        else if($price_filter == 5)
+        $products = Product::sortable()->where('price', '<', 100 )->where('price', '>', 80 )->paginate(100);
+        else
+        $products = Product::sortable()->paginate(100);
+
+
+        return view("product.index", ["products" => $products, "price_filter" => $price_filter, 'categories' => $categories]);
     }
 
     /**

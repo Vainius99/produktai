@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="shop_email class="col-md-4 col-form-label text-md-right"> Email: </label>
+                            <label for="shop_email" class="col-md-4 col-form-label text-md-right"> Email: </label>
                             <input class="gray form-control col-md-6" type="text" name="shop_email" value="{{$shop->email}}" />
                         </div>
                         <div class="form-group row">

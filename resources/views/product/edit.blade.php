@@ -31,8 +31,8 @@
                             <input class="gray form-control col-md-6" type="text" name="product_image" value="{{$product->image}}" />
                         </div>
                         <div class="form-group row">
-                            <label for="product_catgory_id" class="col-md-4 col-form-label text-md-right"> Catgory info: </label>
-                            <select class="form-control col-md-6" name="product_catgory_id">
+                            <label for="product_category_id" class="col-md-4 col-form-label text-md-right"> Catgory info: </label>
+                            <select class="form-control col-md-6" name="product_category_id">
                                 @foreach ($categories as $category)
                                 <option value="{{$category->id}}" @if($category->id == $product->category_id) selected @endif >{{$category->title}}</option>
                                 @endforeach

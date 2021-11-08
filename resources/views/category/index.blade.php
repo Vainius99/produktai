@@ -7,10 +7,10 @@
     <table class="table table-bordered table-hover gray">
         <thead class="thead-dark">
         <tr>
-            <th> ID </th>
-            <th> Title </th>
-            <th> Description </th>
-            <th> Shop </th>
+            <th> @sortablelink( 'id', 'ID') </th>
+            <th> @sortablelink('title', 'Title') </th>
+            <th> @sortablelink( 'description', 'Description') </th>
+            <th> @sortablelink( 'shop_id', 'Shop') </th>
             <th>Action</th>
         </tr>
         </thead>

@@ -22,7 +22,7 @@
                             <label for="category_shop_id" class="col-md-4 col-form-label text-md-right"> Shop info: </label>
                             <select class="form-control col-md-6" name="category_shop_id">
                                 @foreach ($shops as $shop)
-                                <option value="{{$shop->id}}" @if($shop->id == $catgory->shop_id) selected @endif >{{$shop->title}}</option>
+                                <option value="{{$shop->id}}" @if($shop->id == $category->shop_id) selected @endif >{{$shop->title}}</option>
                                 @endforeach
                             </select>
                         </div>
