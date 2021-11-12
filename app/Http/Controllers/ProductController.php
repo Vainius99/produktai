@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Shop;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all();
+        $shops = Shop::all();
         $price_filter = $request->price_filter;
+        $category_sort = $request->category_sort ;
 
         if(!$price_filter)
         $products = Product::sortable()->paginate(100);
@@ -35,7 +38,7 @@ class ProductController extends Controller
         $products = Product::sortable()->paginate(100);
 
 
-        return view("product.index", ["products" => $products, "price_filter" => $price_filter, 'categories' => $categories]);
+        return view("product.index", ["products" => $products, "price_filter" => $price_filter, 'categories' => $categories, 'category_sort' => $category_sort, 'shops' => $shops]);
     }
 
     /**

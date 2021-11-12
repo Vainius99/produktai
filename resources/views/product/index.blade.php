@@ -8,16 +8,26 @@
         <form action="{{route('product.index')}}" method="GET">
             <label class="text-md-center" for="price_filter"> Price Filter </label>
             <select class="form-control" name="price_filter">
-                <option value="1"> 0 - 20 </option>
-                <option value="2"> 20 - 40 </option>
-                <option value="3"> 40 - 60 </option>
-                <option value="4"> 60 - 80 </option>
-                <option value="5"> 80 - 100 </option>
+                @if ( $price_filter == 1 ) <option value="1" selected> 0 - 20 </option>
+                @else <option value="1"> 0 - 20 </option>
+                @endif
+                @if ( $price_filter == 2 ) <option value="2" selected> 20 - 40 </option>
+                @else <option value="2"> 20 - 40 </option>
+                @endif
+                @if ( $price_filter == 3 ) <option value="3" selected> 40 - 60</option>
+                @else <option value="3"> 40 - 60 </option>
+                @endif
+                @if ( $price_filter == 4 ) <option value="4" selected> 60 - 80</option>
+                @else <option value="4"> 60 - 80</option>
+                @endif
+                @if ( $price_filter == 5 ) <option value="5" selected> 80 - 100  </option>
+                @else <option value="5"> 80 - 100  </option>
+                @endif
             </select>
             <label class="text-md-right" for="category_sort"> Category </label>
             <select class="form-control" name="category_sort">
                 @foreach ($categories as $category)
-                    <option value="{{$category->id}}">{{$category->title}}</option>
+                    <option value="{{$category->id}}" @if ($category->id == $category_sort) selected @endif >{{$category->title}}</option>
                 @endforeach
             </select>
             <button type="submit" class="form-control col-md-4 btn btn-warning">Filter</button>
@@ -37,6 +47,7 @@
             <th> @sortablelink('price', 'Price') </th>
             <th> Image </th>
             <th> @sortablelink('category_id', 'Category') </th>
+            <th> Shop </th>
             <th>Action</th>
         </tr>
         </thead>
@@ -52,6 +63,11 @@
             <td>
                 {{$product->productCategory->title}}
             </td>
+
+                <td>
+                    {{$product->productCategory->categoryShop->title}}
+                </td>
+
             <td>
                 <a class="btn btn-dark intgray" href="{{route('product.edit', [$product]) }}">Edit</a>
                 <form method="post" action="{{route('product.destroy', [$product]) }}">
