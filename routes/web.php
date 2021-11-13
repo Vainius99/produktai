@@ -27,6 +27,7 @@ Route::prefix('products')->group(function () {
     Route::post('update/{product}', 'App\Http\Controllers\ProductController@update')->name('product.update')->middleware("auth");
     Route::post('delete/{product}', 'App\Http\Controllers\ProductController@destroy')->name('product.destroy')->middleware("auth");
     Route::get('show/{product}', 'App\Http\Controllers\ProductController@show')->name('product.show')->middleware("auth");
+    Route::post('pdf', 'App\Http\Controllers\ProductController@generatePDF')->name('product.pdf');
 });
 
 Route::prefix('categories')->group(function () {

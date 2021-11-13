@@ -8,6 +8,9 @@
         <form action="{{route('product.index')}}" method="GET">
             <label class="text-md-center" for="price_filter"> Price Filter </label>
             <select class="form-control" name="price_filter">
+                @if ( $price_filter == 6 ) <option value="6" selected> All  </option>
+                @else <option value="6"> All  </option>
+                @endif
                 @if ( $price_filter == 1 ) <option value="1" selected> 0 - 20 </option>
                 @else <option value="1"> 0 - 20 </option>
                 @endif
@@ -32,6 +35,12 @@
             </select>
             <button type="submit" class="form-control col-md-4 btn btn-warning">Filter</button>
             <a class="btn btn-danger" href="{{ url('/products')}}">Clear Filter</a>
+        </form>
+        <form method="POST" action="{{route('product.pdf')}}">
+            @csrf
+            {{-- <input type="hidden" name="price_filter" value="{{$price_filterF}}"> --}}
+            <input type="hidden" name="category_sort" value="{{$category_sortF}}">
+            <button class="btn btn-warning" name="productPdf" type="submit">Download PDF</button>
         </form>
 
     </div>
@@ -63,11 +72,9 @@
             <td>
                 {{$product->productCategory->title}}
             </td>
-
-                <td>
-                    {{$product->productCategory->categoryShop->title}}
-                </td>
-
+            <td>
+                {{$product->productCategory->categoryShop->title}}
+            </td>
             <td>
                 <a class="btn btn-dark intgray" href="{{route('product.edit', [$product]) }}">Edit</a>
                 <form method="post" action="{{route('product.destroy', [$product]) }}">
@@ -78,6 +85,11 @@
         </tr>
         @endforeach
     </table>
+
+
+    {{-- {!! $products->appends(Request::except('page'))->render() !!} --}}
+
+
 
 </div>
 @endsection
