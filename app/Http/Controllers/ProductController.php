@@ -23,19 +23,18 @@ class ProductController extends Controller
         $category_sort = $request->category_sort;
 
 
-        if(!$price_filter && !$category_sort)
-        $products = Product::sortable()->paginate(100);
-        else if($price_filter == 1 && !$category_sort)
+
+        if($price_filter == 1 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 20 )->paginate(100);
-        else if($price_filter == 2 && !$category_sort)
+        else if($price_filter == 2 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 40 )->where('price', '>', 20 )->paginate(100);
-        else if($price_filter == 3 && !$category_sort)
+        else if($price_filter == 3 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 60 )->where('price', '>', 40 )->paginate(100);
-        else if($price_filter == 4 && !$category_sort)
+        else if($price_filter == 4 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 80 )->where('price', '>', 60 )->paginate(100);
-        else if($price_filter == 5 && !$category_sort)
+        else if($price_filter == 5 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 100 )->where('price', '>', 80 )->paginate(100);
-        else if($price_filter == 6 && !$category_sort)
+        else if($price_filter == 6 && $category_sort == "all")
         $products = Product::sortable()->where('price', '<', 100 )->paginate(100);
         else if($price_filter == 1 && $category_sort)
         $products = Product::sortable()->where('price', '<', 20 )->where('category_id', $category_sort)->paginate(100);
@@ -56,7 +55,7 @@ class ProductController extends Controller
 
 
         return view("product.index", ["products" => $products, "price_filter" => $price_filter, 'categories' => $categories, 'category_sort' => $category_sort,
-         'shops' => $shops, "category_sortF" =>$category_sort]);
+         'shops' => $shops, "category_sortF" =>$category_sort, "price_filterF" => $price_filter]);
 
     }
 
@@ -161,10 +160,33 @@ class ProductController extends Controller
     public function generatePDF(Request $request) {
 
         $category_sort = $request->category_sort;
+        $price_filter = $request->price_filter;
 
 
-        if($category_sort)
-        $products = Product::where('category_id', $category_sort)->get();
+        if($price_filter == 1 && $category_sort == "all")
+        $products = Product::where('price', '<', 20 )->get();
+        else if($price_filter == 2 && $category_sort == "all")
+        $products = Product::where('price', '<', 40 )->where('price', '>', 20 )->get();
+        else if($price_filter == 3 && $category_sort == "all")
+        $products = Product::where('price', '<', 60 )->where('price', '>', 40 )->get();
+        else if($price_filter == 4 && $category_sort == "all")
+        $products = Product::where('price', '<', 80 )->where('price', '>', 60 )->get();
+        else if($price_filter == 5 && $category_sort == "all")
+        $products = Product::where('price', '<', 100 )->where('price', '>', 80 )->get();
+        else if($price_filter == 6 && $category_sort == "all")
+        $products = Product::where('price', '<', 100 )->get();
+        else if($price_filter == 1 && $category_sort)
+        $products = Product::where('price', '<', 20 )->where('category_id', $category_sort)->get();
+        else if($price_filter == 2 && $category_sort)
+        $products = Product::where('price', '<', 40 )->where('price', '>', 20 )->where('category_id', $category_sort)->get();
+        else if($price_filter == 3 && $category_sort)
+        $products = Product::where('price', '<', 60 )->where('price', '>', 40 )->where('category_id', $category_sort)->get();
+        else if($price_filter == 4 && $category_sort)
+        $products = Product::where('price', '<', 80 )->where('price', '>', 60 )->where('category_id', $category_sort)->get();
+        else if($price_filter == 5 && $category_sort)
+        $products = Product::where('price', '<', 100 )->where('price', '>', 80 )->where('category_id', $category_sort)->get();
+        else if($price_filter == 6 && $category_sort)
+        $products = Product::where('price', '<', 100 )->where('category_id', $category_sort)->get();
         else
         $products = Product::all();
 

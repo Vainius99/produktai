@@ -29,6 +29,7 @@
             </select>
             <label class="text-md-right" for="category_sort"> Category </label>
             <select class="form-control" name="category_sort">
+                <option value="all" @if ("all" == $category_sort) selected  @else @endif > All </option>
                 @foreach ($categories as $category)
                     <option value="{{$category->id}}" @if ($category->id == $category_sort) selected @endif >{{$category->title}}</option>
                 @endforeach
@@ -38,7 +39,7 @@
         </form>
         <form method="POST" action="{{route('product.pdf')}}">
             @csrf
-            {{-- <input type="hidden" name="price_filter" value="{{$price_filterF}}"> --}}
+            <input type="hidden" name="price_filter" value="{{$price_filterF}}">
             <input type="hidden" name="category_sort" value="{{$category_sortF}}">
             <button class="btn btn-warning" name="productPdf" type="submit">Download PDF</button>
         </form>
