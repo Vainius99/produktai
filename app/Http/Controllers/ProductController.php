@@ -7,6 +7,8 @@ use App\Models\Shop;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use PDF;
+use Validator;
+
 
 class ProductController extends Controller
 {
@@ -78,19 +80,66 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = new Product;
+        $input = [
+            'product_title' => $request->product_title,
+            'product_excertpt' => $request->product_excertpt,
+            'product_description' => $request->product_description,
+            'product_price' => $request->product_price,
+            // 'product_image' => $request->product_image,
+            // 'product_category_id' => $request->product_category_id,
+        ];
 
+        $rules = [
+            'product_title' => 'required|min:4',
+            'product_excertpt' => 'required|min:8',
+            'product_description' => 'required|min:8',
+            'product_price' => 'required',
+            // 'product_image' => 'required|max:3',
+            // 'product_category_id' => 'required',
+        ];
+
+        $validator = Validator::make($input, $rules);
+
+
+        if($validator->passes()) {
+
+        $product = new Product;
         $product->title = $request->product_title;
+        // excertpt
         $product->excertpt = $request->product_excertpt;
         $product->description = $request->product_description;
         $product->price = $request->product_price;
         $product->image = $request->product_image;
         $product->category_id = $request->product_category_id;
-
         $product->save();
 
-        return redirect()->route("product.index");
+        $success = [
+            'message' => 'Product added successfully',
+            'product_id' => $product->id,
+            'product_title' => $product->title,
+            'product_excertpt' => $product->excertpt,
+            'product_description' => $product->description,
+            'product_price' => $product->price,
+            'product_image' => $product->image,
+            'product_category_id' => $product->category_id,
+
+        ];
+
+        $success_json = response()->json($success);
+
+        return $success_json;
+
     }
+
+    $error = [
+        'error' => $validator->messages()->get("*")
+    ];
+
+    $error_json = response()->json($error);
+
+    return $error_json;
+
+}
 
     /**
      * Display the specified resource.
